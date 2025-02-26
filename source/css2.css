@@ -1,0 +1,111 @@
+.button {
+  margin: 8px;
+  width: 120px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.491);
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  /* 开启定位是为了给波纹动画元素使用 */
+  position: relative;
+  /* 必须加上超出隐藏，注释掉以后效果很明显 */
+  overflow: hidden;
+  /* hover过渡一下 */
+  transition: all 0.3s;
+}
+h1{
+    color: transparent;
+        -webkit-text-stroke: 2px rgb(255, 252, 252);
+        mix-blend-mode: difference;
+        /* 颜色自动适配背景 */
+        letter-spacing: 0.04em;
+    font-size:300%;
+    cursor: not-allowed;
+    text-align: center;
+}
+img{
+    width:270px;
+    height: 180px;
+    border-radius:10px;
+}
+ul {
+    position: relative; /* 确保父容器非 static 定位 */
+  }
+  
+li {
+    float: left;
+    width: 300px; /* 列表项需要设置宽度 */
+  }
+  
+.clear{
+    clear: both;
+  }
+h3 {
+  color:black;
+  background-color:rgba(252, 248, 248, 0.459);
+  text-align: center;
+  cursor: help;
+}
+
+marquee {
+  width: 100%;
+  cursor: help;
+    border-radius:15px;
+}
+
+font {
+  background-color: rgba(252, 248, 248, 0.3);
+}
+a {
+  text-decoration: none;
+}
+#max{
+    width: 900px;
+    height: 500px;
+    align-items: center;
+    margin: 5% auto;
+    margin-top: 0%;
+}
+.re{
+    position: relative;
+    height: 400px;
+}
+.re ul{
+    list-style-type:none ;
+}
+.re ul>li{
+    width: 600px;
+    height: 300px;
+    position: absolute;
+
+    transition: 1s;
+    opacity: 0;
+}
+.re ul>li img{
+    width: 900px;
+    height: 500px;
+    border-radius: 10%;
+    border: 15px solid #fffbd6;
+}
+#max ol {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5,75px);
+    grid-template-rows: auto;
+    grid-gap: 1em;gap: 1em;
+    float: right;
+    margin-top: 450px;
+    list-style: none;
+    top:0;left:0;
+}
+#max ol li {
+    width: 25px;
+    height: 10px;
+    font-size: 15px;
+    line-height: 20px;
+    float: left;
+    text-align: center;
+    border-radius: 2em;
+    border: 5px solid #999999;
+}

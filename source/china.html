@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>中国地图</title>
+    <style>
+    body {
+        background-color: rgba(0, 208, 255, 0.85);
+    }
+    #daohang{
+        position:absolute;/*绝对布局*/
+        top: 0%;
+        left: 0%;
+        padding-top: 0px;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(136, 192, 244, 0.573);
+    }
+    ul{/*设置导航栏的框框*/
+        margin: auto;/*框框整体的位置，auto控制的是左右距离为自动调节*/
+        width: 50%;/*框框的长度*/
+        height: 35px;/*框框的宽度*/
+    }
+    li{
+        list-style-type: none;/* 去掉li前的点 */
+        float: left;/*将li设置成做浮动，变为联动*/
+    }
+    .a{
+        display: block;/*将超链接变成块状*/
+        width: 100px;/*设置块的长度*/
+        height: 60px;/*设置块的宽度*/
+        line-height: 60px;/*设置字体在块中的高度*/
+        color: #fff;/*设置字体颜色*/
+        text-align: center;/*字体居中*/
+        text-decoration: none;/*去掉下划线*/
+        font-size: 15px;/*设置字体大小*/
+    }
+    .a:hover{
+        background-color: rgba(0, 183, 255, 0.699);
+        border-radius:10px;
+        color: gold;
+    }
+    select {
+        border-radius:10px;
+        border: #090808;
+        border-style: groove;
+        font-family: 华文新魏;
+        font-size: 16.5px;
+    }
+    select:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+    }
+    .input__container {
+        position: relative;
+        background: rgba(255, 255, 255, 0.664);
+        padding: 10px 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        border-radius: 22px;
+        max-width: 300px;
+        transition: transform 400ms;
+        transform-style: preserve-3d;
+        transform: rotateX(15deg) rotateY(-20deg);
+        perspective: 500px;
+    }
+
+    .shadow__input {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+        filter: blur(30px);
+        border-radius: 20px;
+        background-color: #999cff;
+        background-image: radial-gradient(at 85% 51%, hsla(60,60%,61%,1) 0px, transparent 50%),
+        radial-gradient(at 74% 68%, hsla(235,69%,77%,1) 0px, transparent 50%),
+        radial-gradient(at 64% 79%, hsla(284,72%,73%,1) 0px, transparent 50%),
+        radial-gradient(at 75% 16%, hsla(283,60%,72%,1) 0px, transparent 50%),
+        radial-gradient(at 90% 65%, hsla(153,70%,64%,1) 0px, transparent 50%),
+        radial-gradient(at 91% 83%, hsla(283,74%,69%,1) 0px, transparent 50%),
+        radial-gradient(at 72% 91%, hsla(213,75%,75%,1) 0px, transparent 50%);
+    }
+
+    .container {
+        position: fixed;
+        background: linear-gradient(135deg, rgb(179, 208, 253) 0%, rgb(164, 202, 248) 100%);
+        border-radius: 1000px;
+        padding: 5px;
+        display: grid;
+        place-content: center;
+        z-index: 0;
+        max-width: 150px;
+        margin: 0 0px;
+        top:8px;
+        right:10px;
+    }
+
+    .search-container {
+        position: relative;
+        width: 93%;
+        border-radius: 50px;
+        background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
+        padding: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-container::after, .search-container::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        position: absolute;
+    }
+
+    .search-container::before {
+        top: -1px;
+        left: -1px;
+        background: linear-gradient(0deg, rgb(218, 232, 247) 0%, rgb(255, 255, 255) 100%);
+        z-index: -1;
+    }
+
+    .search-container::after {
+        bottom: -1px;
+        right: -1px;
+        background: linear-gradient(0deg, rgb(163, 206, 255) 0%, rgb(211, 232, 255) 100%);
+        box-shadow: rgba(79, 156, 232, 0.7019607843) 3px 3px 5px 0px, rgba(79, 156, 232, 0.7019607843) 5px 5px 20px 0px;
+        z-index: -2;
+    }
+
+    .input {
+        padding: 3px;
+        width: 100%;
+        background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
+        border: none;
+        color: #9ebcd9;
+        font-size: 15px;
+        border-radius: 50px;
+    }
+
+    .input:focus {
+        outline: none;
+        background: linear-gradient(135deg, rgb(239, 247, 255) 0%, rgb(214, 229, 247) 100%);
+    }
+
+    .search__icon {
+        width: 20px;
+        aspect-ratio: 1;
+        border-left: 2px solid rgba(162, 162, 162, 0.85);
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-radius: 50%;
+        padding-left: 5px;
+        margin-right: 2px;
+    }
+
+    .search__icon:hover {
+        border-left: 5px solid rgba(0, 0, 0, 0.48);
+    }
+
+    .search__icon path {
+        fill: rgba(149, 149, 149, 0.89);
+    }
+
+    </style>
+                <script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
+            <script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/maps/china.js"></script>
+</head>
+<body>
+<div id="daohang">
+    <ul>
+        <li><a href="shouye.html" class="a">首页</a></li>
+        <li><a class="a" href="beijin.html">查找省市</a></li>
+        <li><a href="https://www.booking.com/index.zh-cn.html" class="a">酒店预订</a></li>
+        <li><a class="a">了解中国</a></li>
+        <li><a href="taolun.html" class="a">参与讨论</a></li>
+        <li><a class="a" href="xiaozu.html">小组成员</a></li>
+    </ul>
+    <div class="container">
+        <div class="search-container">
+            <form action="https://www.bing.com/search" method="get">
+                <input type="text" id="search" class="input" type="text" placeholder="搜索景点" name="q" />
+            </form>
+            <svg viewBox="0 0 24 24" class="search__icon">
+                <g>
+                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                    </path>
+                </g>
+            </svg>
+        </div>
+    </div>
+    <br>
+    <audio controls="controls" autoplay="autoplay">
+        <source src="china_voice.mp3" type="audio/mp3" />
+    </audio>
+    <div id="740d452669ee48c4b3691c6f59e69b6b" class="chart-container" style="width:900px; height:500px; "></div>
+    <script>
+        var chart_740d452669ee48c4b3691c6f59e69b6b = echarts.init(
+            document.getElementById('740d452669ee48c4b3691c6f59e69b6b'), 'white', {renderer: 'canvas'});
+        var option_740d452669ee48c4b3691c6f59e69b6b = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "aria": {
+        "enabled": false
+    },
+    "color": [
+        "#5470c6",
+        "#91cc75",
+        "#fac858",
+        "#ee6666",
+        "#73c0de",
+        "#3ba272",
+        "#fc8452",
+        "#9a60b4",
+        "#ea7ccc"
+    ],
+    "series": [
+        {
+            "type": "scatter",
+            "coordinateSystem": "geo",
+            "symbolSize": 12,
+            "data": [
+                {
+                    "name": "\u6fb3\u95e8",
+                    "value": [
+                        113.54909,
+                        22.198951,
+                        114514
+                    ]
+                }
+            ],
+            "label": {
+                "show": false,
+                "margin": 8
+            },
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                ""
+            ],
+            "selected": {},
+            "show": true,
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14,
+            "backgroundColor": "transparent",
+            "borderColor": "#ccc",
+            "borderWidth": 1,
+            "borderRadius": 0,
+            "pageButtonItemGap": 5,
+            "pageButtonPosition": "end",
+            "pageFormatter": "{current}/{total}",
+            "pageIconColor": "#2f4554",
+            "pageIconInactiveColor": "#aaa",
+            "pageIconSize": 15,
+            "animationDurationUpdate": 800,
+            "selector": false,
+            "selectorPosition": "auto",
+            "selectorItemGap": 7,
+            "selectorButtonGap": 10
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "showContent": true,
+        "alwaysShowContent": false,
+        "showDelay": 0,
+        "hideDelay": 100,
+        "enterable": false,
+        "confine": false,
+        "appendToBody": false,
+        "transitionDuration": 0.4,
+        "formatter": function (params) {        return params.name + ' : ' + params.value[2];    },
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0,
+        "padding": 5,
+        "order": "seriesAsc"
+    },
+    "title": [
+        {
+            "show": true,
+            "text": "\u4e2d\u56fd\u5730\u56fe",
+            "target": "blank",
+            "subtarget": "blank",
+            "padding": 5,
+            "itemGap": 10,
+            "textAlign": "auto",
+            "textVerticalAlign": "auto",
+            "triggerEvent": false
+        }
+    ],
+    "visualMap": {
+        "show": true,
+        "type": "continuous",
+        "min": 0,
+        "max": 100,
+        "inRange": {
+            "color": [
+                "#50a3ba",
+                "#eac763",
+                "#d94e5d"
+            ]
+        },
+        "calculable": true,
+        "inverse": false,
+        "splitNumber": 5,
+        "hoverLink": true,
+        "orient": "vertical",
+        "padding": 5,
+        "showLabel": true,
+        "itemWidth": 20,
+        "itemHeight": 140,
+        "borderWidth": 0
+    },
+    "geo": {
+        "map": "china",
+        "roam": true,
+        "aspectScale": 0.75,
+        "nameProperty": "name",
+        "selectedMode": false,
+        "emphasis": {}
+    }
+};
+        chart_740d452669ee48c4b3691c6f59e69b6b.setOption(option_740d452669ee48c4b3691c6f59e69b6b);
+    </script>
+    <script>
+        Strname="中国，传统观念指位于天下正中的国家。原指包括河南省及附近的黄河中下游流域地区。历代王朝政权透过与周边各政权的交流与征战，中国的疆域版图几经扩张与缩减，目前扩及黑龙江流域、塞北、西域、青藏及南海诸岛等地。现今国际上广泛承认拥有中国代表权的政权是中华人民共和国。\n" +
+            "\n" +
+            "    华夏是人类的文明摇篮之一。 新石器时期，中原地区开始出现聚落组织；公元前27世纪左右出现方国，方国制度以共主为首；前20世纪开始，古代中国进入世袭的封建阶段；公元前2世纪，秦灭六国，完成中国第一次大一统。此后两千年来，中国的政治制度以半传统的夏代为基础的世袭君主制运作，此后经多次扩大，破裂，重组，朝代更迭，经过数次统一与分裂交替进行。直到1911年辛亥革命后建立中华民国，中国的政体从君主制转为共和制。1945年第二次国共内战爆发后，中国共产党逐渐控制中国的大部分领土；1949年10月1日，由中国共产党执政的中华人民共和国建立，中国国民党执政的中华民国政府则在该年底撤退至台湾，形成两岸分治的现状。在联合国系统内，中华民国政府曾长期拥有“中国”代表权，直到1971年联合国大会2758号决议通过后，被中华人民共和国取代。\n" +
+            "\n" +
+            "    中国经济在相当长的历史时期中在世界上占有重要地位，其周期通常与王朝的兴衰更替对应。中国经济史可分为几个阶段：第一阶段为远古至西晋末年，其中以三国孙吴时转变较大；第二阶段为东晋至北宋末年，其中以唐安史之乱划分为前后；第三阶段为南宋建立至鸦片战争。自明清以来，由于保守的对外政策，实行海禁，以及受重农抑商思想和对于工业的轻视，中国工业化程度发展较慢。而西方国家在19世纪工业革命后的工业成品，无论在数量和质量上，相较于当时中国纯手工业经济出产的商品，占有压倒性优势，而同时期的西方由于工业革命的影响，工业化水平大幅提高，以工业为基础的经济也快速发展，致使中国经济遂落后于西方。1978年改革开放施行后，中国经济发展迅速，对世界经济的影响也日渐显著。目前，中国是仅次于美国的全球第二大经济体。\n" +
+            "\n" +
+            "    中国文化历经上千年的历史演变，是各区域、各民族古代文化长期相互交流、借鉴、融合的结果。在长期的历史发展中，中国形成了多元一体的中华文化格局[17]。作为其主体的汉文化对日本、朝鲜和东南亚有深远影响，形成汉字文化圈。中国传统艺术形式有国乐、相声、戏曲、书法、国画、文学、陶瓷艺术、雕刻等，传统娱乐活动有象棋、围棋、麻将、中国武术等。茶、酒、菜和筷子等为中国的特色饮食文化，春节（阴历新年）、元宵、清明、端午、七夕、中秋、重阳、冬至等为中国传统节日。中国传统上是一个儒学国家，以夏历为历法，以五伦为道德准则。春秋时期孔子“有教无类，因材施教”开始办私塾培养人才，汉朝时采用察举推选政府官员，隋朝起实行科举在平民中选拔人才。此外，中国历朝历代都设有史官，因此保存有十分详尽的历史资料，如《二十四史》、《资治通鉴》等。古代中国在科学领域上也有丰厚的成就。";
+        StrLen=Strname.length;
+        document.write("<div id='a' style='color:#000000;font-family:华文楷体;font-size:24px'></div>");
+        var act=0;
+        function gogo()
+        {
+            ++act;
+            act=(act>(StrLen-1))?0:act;
+            act=(act<0)?(StrLen-1):act;
+            a.innerHTML=Strname.substring(0,act)+"<font style='font-size:24px' font-family:华文楷体; color='#FF0000'>"+Strname.substring(act,act+1)+"</font>"+Strname.substring(act+1,StrLen);
+        }
+        setInterval("gogo()",200);
+    </script>
+
+</body>
+</html>
